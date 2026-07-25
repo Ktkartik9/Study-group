@@ -1,5 +1,5 @@
 from django.urls import path
-from accounts.views import RegisterView, LoginView, ProfileView , RefreshTokenView 
+from accounts.views import RegisterView, LoginView, ProfileView , RefreshTokenView , LogoutView
 from accounts.serializers import RegisterSerializer
 
 
@@ -9,5 +9,6 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("profile/", ProfileView.as_view(), name="profile"),
     path("refresh-token/",RefreshTokenView.as_view(),name="refresh_token"),
+    path("logout/",LogoutView.as_view(),name="logout",),
 ]
 
