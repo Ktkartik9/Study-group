@@ -1,8 +1,10 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView ,UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from studyrooms.models import StudyRoom
-from studyrooms.serializers import StudyRoomSerializer , StudyRoomDetailSerializer
+from studyrooms.serializers import StudyRoomSerializer , StudyRoomDetailSerializer ,UpdateStudyRoomSerializer
 from rest_framework.generics import RetrieveAPIView
+
+
 
 
 class StudyRoomListView(ListAPIView):
@@ -40,3 +42,28 @@ class StudyRoomDetailView(RetrieveAPIView):
         )
         .prefetch_related("members")
     )
+
+class StudyRoomUpdateView(UpdateAPIView):
+
+    serializer_class = UpdateStudyRoomSerializer
+
+    permission_classes = [
+        IsAuthenticated,
+    
+    ]
+
+    queryset = StudyRoom.objects.all()
+
+    def perform_update(self, serializer):
+
+        if not serializer.instance.is_active:
+            from rest_framework.exceptions import ValidationError
+
+            raise ValidationError(
+                {
+                    "message":
+                    "Inactive study room cannot be updated."
+                }
+            )
+
+        serializer.save()

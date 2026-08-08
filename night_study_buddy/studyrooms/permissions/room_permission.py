@@ -12,3 +12,16 @@ class IsTeacherOrAdmin(BasePermission):
             and request.user.role in ["teacher", "admin"]
         )
 
+class IsRoomOwnerOrAdmin(BasePermission):
+    
+    message = "Only the room creator or admin can perform this action."
+
+    def has_object_permission(self, request, view, obj):
+
+        return (
+            request.user.is_authenticated
+            and (
+                obj.created_by == request.user
+                or request.user.role == "admin"
+            )
+        )

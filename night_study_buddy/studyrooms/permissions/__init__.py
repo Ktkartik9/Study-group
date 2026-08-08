@@ -1,1 +1,1 @@
-from .room_permission import IsTeacherOrAdmin
+from .room_permission import IsTeacherOrAdmin ,  IsRoomOwnerOrAdmin
