@@ -13,8 +13,13 @@ urlpatterns = [
     path(
     "<int:pk>/delete/",
     StudyRoomDeleteView.as_view(),
-    name="study-room-delete",
-),
+    name="study-room-delete",),
+    path(
+    "<int:pk>/delete/",
+    StudyRoomDeleteView.as_view(),
+    name="study-room-delete",),
+
+
     
 ]
 

@@ -1,9 +1,10 @@
 from rest_framework.generics import ListAPIView ,UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
+from night_study_buddy.studyrooms.permissions.room_permission import IsRoomOwnerOrAdmin
 from studyrooms.models import StudyRoom
 from studyrooms.serializers import StudyRoomSerializer , StudyRoomDetailSerializer ,UpdateStudyRoomSerializer
 from rest_framework.generics import RetrieveAPIView
-
+from rest_framework.generics import DestroyAPIView
 
 
 
@@ -67,3 +68,17 @@ class StudyRoomUpdateView(UpdateAPIView):
             )
 
         serializer.save()
+
+class StudyRoomDeleteView(DestroyAPIView):
+
+    permission_classes = [
+        IsAuthenticated,
+        IsRoomOwnerOrAdmin,
+    ]
+
+    queryset = StudyRoom.objects.all()
+
+    def perform_destroy(self, instance):
+
+        instance.is_active = False
+        instance.save(update_fields=["is_active"])
