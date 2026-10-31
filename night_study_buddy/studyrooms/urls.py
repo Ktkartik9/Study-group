@@ -1,7 +1,5 @@
 from django.urls import path
-
 from studyrooms.views import CreateStudyRoomView , StudyRoomListView , StudyRoomDetailView , StudyRoomUpdateView , StudyRoomDeleteView 
-
 
 
 urlpatterns = [
@@ -18,8 +16,6 @@ urlpatterns = [
     "<int:pk>/delete/",
     StudyRoomDeleteView.as_view(),
     name="study-room-delete",),
-
-
-    
+   
 ]
 
