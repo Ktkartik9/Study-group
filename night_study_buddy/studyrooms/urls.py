@@ -1,5 +1,6 @@
 from django.urls import path
 from studyrooms.views import CreateStudyRoomView , StudyRoomListView , StudyRoomDetailView , StudyRoomUpdateView , StudyRoomDeleteView 
+from studyrooms.views import JoinStudyRoomView
 
 
 urlpatterns = [
@@ -16,6 +17,10 @@ urlpatterns = [
     "<int:pk>/delete/",
     StudyRoomDeleteView.as_view(),
     name="study-room-delete",),
-   
+    path(
+    "<int:pk>/join/",
+    JoinStudyRoomView.as_view(),
+    name="study-room-join",
+    ),
 ]
 
