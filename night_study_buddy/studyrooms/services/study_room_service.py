@@ -52,3 +52,20 @@ class StudyRoomService:
         room.members.add(user)
 
         return room
+
+    @staticmethod
+    def leave_room(room_id, user):
+
+        try:
+            room = StudyRoom.objects.get(id=room_id)
+        except StudyRoom.DoesNotExist:
+            raise ValidationError("Study room not found.")
+
+        if not room.members.filter(id=user.id).exists():
+            raise ValidationError(
+                "You are not a member of this study room."
+            )
+
+        room.members.remove(user)
+
+        return room

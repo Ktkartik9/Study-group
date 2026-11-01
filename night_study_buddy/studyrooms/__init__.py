@@ -6,3 +6,5 @@ from .room import (
     StudyRoomUpdateView,
     StudyRoomDeleteView,
 )
+
+from .leave_room import LeaveStudyRoomView
