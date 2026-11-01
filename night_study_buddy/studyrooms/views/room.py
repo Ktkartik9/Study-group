@@ -5,6 +5,8 @@ from studyrooms.models import StudyRoom
 from studyrooms.serializers import StudyRoomSerializer , StudyRoomDetailSerializer ,UpdateStudyRoomSerializer
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.generics import DestroyAPIView
+from studyrooms.permissions import IsStudent
+
 
 
 
@@ -82,3 +84,25 @@ class StudyRoomDeleteView(DestroyAPIView):
 
         instance.is_active = False
         instance.save(update_fields=["is_active"])
+
+
+
+
+class MyStudyRoomsView(ListAPIView):
+    serializer_class = StudyRoomSerializer
+    permission_classes = [IsAuthenticated, IsStudent]
+
+    def get_queryset(self):
+        return (
+            StudyRoom.objects
+            .filter(
+                members=self.request.user,
+                is_active=True,
+            )
+            .select_related(
+                "subject",
+                "classroom",
+                "created_by",
+            )
+            .order_by("-created_at")
+        )
