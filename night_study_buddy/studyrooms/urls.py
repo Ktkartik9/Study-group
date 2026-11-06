@@ -2,6 +2,7 @@ from django.urls import path
 from studyrooms.views import CreateStudyRoomView , StudyRoomListView , StudyRoomDetailView , StudyRoomUpdateView , StudyRoomDeleteView 
 from studyrooms.views import JoinStudyRoomView
 from studyrooms.views import LeaveStudyRoomView
+from studyrooms.views import MyStudyRoomsView
 
 
 urlpatterns = [
@@ -27,6 +28,11 @@ urlpatterns = [
     "<int:pk>/leave/",
     LeaveStudyRoomView.as_view(),
     name="study-room-leave",
+),
+    path(
+    "my-rooms/",
+    MyStudyRoomsView.as_view(),
+    name="my-study-rooms",
 ),
 ]
 
